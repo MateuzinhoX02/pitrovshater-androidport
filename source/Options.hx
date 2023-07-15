@@ -45,6 +45,7 @@ class Option
 	{
 		display = updateDisplay();
 	}
+	
 	private var description:String = "";
 	private var display:String;
 	private var acceptValues:Bool = false;
@@ -422,6 +423,8 @@ class FPSCapOption extends Option
 	{
 		return "Current FPS Cap: " + FlxG.save.data.fpsCap + 
 		(FlxG.save.data.fpsCap == Application.current.window.displayMode.refreshRate ? "Hz (Refresh Rate)" : "");
+
+		// Isso deve ser salvo nos dados do jogo lol
 	}
 }
 

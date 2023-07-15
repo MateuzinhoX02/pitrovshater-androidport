@@ -147,7 +147,7 @@ class PlayState extends MusicBeatState
 	private var startingSong:Bool = false;
 
 
-	private var drainHealth:Bool = false;
+	private var drainHealth:Bool = false; // As contas disso estão bem sus... Seria bom abaixar os valores da corexpurgation no mobile lol
 
 	private var coreScream:Bool = false;
 
@@ -236,7 +236,7 @@ class PlayState extends MusicBeatState
 	{
 		
 		instance = this;
-		
+
 		if (FlxG.save.data.fpsCap > 290)
 			(cast (Lib.current.getChildAt(0), Main)).setFPSCap(800);
 		
@@ -332,6 +332,11 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+
+		// Informação bem importante
+		// Tava me esquecendo que algumas coisas que deixam a corexputgation bugada são os frames...
+		// Acho que uns 60 fps é o ideal pra mobile
+		// Mais do que isso deixa sus k
 
 		trace('INFORMATION ABOUT WHAT U PLAYIN WIT:\nFRAMES: ' + Conductor.safeFrames + '\nZONE: ' + Conductor.safeZoneOffset + '\nTS: ' + Conductor.timeScale + '\nBotPlay : ' + FlxG.save.data.botplay);
 	
@@ -1960,19 +1965,21 @@ class PlayState extends MusicBeatState
 	override public function update(elapsed:Float)
 	{
 		
+		// Tenho quase certeza de que isso tá deixando a Corexpurgation sus na parte dos drain
+		// X02 CONTAS
+
 		if (drainHealth)
-			{
-				health -= 0.00240;
-			}
+		{
+			health -= 0.00240 / 2;
+		}
 
 		if (coreScream)
-			{
-				health -= 0.00345;
-
-				FlxG.camera.shake(0.03, 0.06);
-				camHUD.shake(0.03, 0.05);
-				dad.playAnim('singUCN', false);
-			}
+		{
+			health -= 0.00345 / 2;
+			FlxG.camera.shake(0.03, 0.06);
+			camHUD.shake(0.03, 0.05);
+			dad.playAnim('singUCN', false);
+		}
 
 		floatshit += 0.05;
 
@@ -2654,28 +2661,29 @@ class PlayState extends MusicBeatState
 	
 						switch (Math.abs(daNote.noteData))
 						{
+							// Se eu não me engano, isso tira vida, mas como o input/hitbox daqui é sus, resolvi deixar a música menos difícil
 							case 2:
 								if (curSong == "Corexpurgation")
 									{
-										health -= 0.006;
+										health -= 0.055;
 									}
 								dad.playAnim('singUP' + altAnim, true);
 							case 3:
 								if (curSong == "Corexpurgation")
 									{
-										health -= 0.006;
+										health -= 0.055;
 									}
 								dad.playAnim('singRIGHT' + altAnim, true);
 							case 1:
 								if (curSong == "Corexpurgation")
 									{
-										health -= 0.006;
+										health -= 0.055;
 									}
 								dad.playAnim('singDOWN' + altAnim, true);
 							case 0:
 								if (curSong == "Corexpurgation")
 									{
-										health -= 0.006;
+										health -= 0.055;
 									}
 								dad.playAnim('singLEFT' + altAnim, true);
 						}
