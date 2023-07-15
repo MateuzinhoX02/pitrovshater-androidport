@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
@@ -183,6 +184,10 @@ class StoryMenuState extends MusicBeatState
 
 		#if mobileC
 		addVirtualPad(FULL, A_B_C);
+		var camcontrol = new FlxCamera();
+		FlxG.cameras.add(camcontrol);
+		camcontrol.bgColor.alpha = 0;
+		_virtualpad.cameras = [camcontrol];
 		#end
 
 		super.create();
